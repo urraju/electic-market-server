@@ -49,8 +49,10 @@ app.use(cors({
   });
   async function run() {
     try {
+        // collection create 
+        const  productsCollection = client.db('emDB').collection('products')
     
-         // Token post 
+    // Token post 
     app.post('/jwt', async(req,res) => {
         const user = req.body
         const token = jwt.sign(user, process.env.SECRET, {expiresIn : '1hr'})
@@ -69,6 +71,22 @@ app.use(cors({
         .clearCookie('token', {maxAge : 0})
         .send({success : true})
       })
+
+    //   get products part 
+    app.get('/products', async(req,res) => {
+        const result = await productsCollection.find().toArray()
+        res.send(result)
+    })
+    app.get('/products', async(req,res) => {
+        const result = await productsCollection.find().toArray()
+        res.send(result)
+    })
+    app.get('/products/:id', async(req,res) => {
+        const id = req.params.id
+        const query = {_id : new ObjectId(id)}
+        const result = await productsCollection.findOne(query)
+        res.send(result)
+     })
      
       await client.db("admin").command({ ping: 1 });
       console.log("Pinged your deployment. You successfully connected to MongoDB!");
