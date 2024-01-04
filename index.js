@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 console.log(process.env.SECRET);
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173","https://electic-market.web.app", "https://electic-market.firebaseapp.com"],
     credentials: true,
   })
 );
